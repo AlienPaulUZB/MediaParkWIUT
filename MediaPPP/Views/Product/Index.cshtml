@@ -1,0 +1,78 @@
+﻿@model IEnumerable<MediaPPP.Models.Product>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<div>
+    @using (Html.BeginForm())
+            {
+                <div class="form-inline">
+                    <div class="form-group">
+                        @Html.TextBox("prodName", "",new {@class ="form-control", placeholder="Product Name"})
+                    </div>
+                    
+                    <div class="form-group">
+                        @Html.TextBox("Desc", "",new {@class ="form-control", placeholder="Search from description"})
+                    </div>
+                    <div class="form-group">
+                        @Html.DropDownList("Category",
+                                            new SelectList(ViewBag.CategoriesList, "CategoryID", "CategoryName"),
+                                            "--Select--",
+                                            new {@class ="form-control", placeholder="Category"})
+                    </div>
+
+
+                    <button type="submit" class="btn btn-default">Filter</button>
+                </div>
+            }
+</div>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.CategoryID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ProductName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ProductPrice)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ProductDescription)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+<tr>
+    <td>
+        @Html.DisplayFor(modelItem => item.CategoryID)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.ProductName)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.ProductPrice)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.ProductDescription)
+    </td>
+    <td>
+        <img src="@Url.Action("ShowImage", new {id=item.ProductID})" width="300" />
+    </td>
+    <td>
+        @Html.ActionLink("Edit", "Edit", new { id = item.ProductID }) |
+        @Html.ActionLink("Details", "Details", new { id = item.ProductID }) |
+        @Html.ActionLink("Delete", "Delete", new { id = item.ProductID })
+    </td>
+</tr>
+}
+
+</table>
